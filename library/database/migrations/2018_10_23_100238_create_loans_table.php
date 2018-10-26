@@ -20,7 +20,7 @@ class CreateLoansTable extends Migration
             $table->timestamp('loaned_at');
             $table->date('max_return');
             $table->timestamp('return_date')->nullable();
-            $table->integer('bill')->nullable();
+            $table->integer('bill')->default(0);
         });
     }
 

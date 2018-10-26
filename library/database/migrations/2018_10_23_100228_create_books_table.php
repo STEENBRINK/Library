@@ -18,15 +18,16 @@ class CreateBooksTable extends Migration
             $table->string('isbn')->unique();
             $table->string('title');
             $table->string('author_firstname');
-            $table->string('author_lasttname');
+            $table->string('author_lastname');
             $table->date('release_date');
             $table->string('distributor');
             $table->integer('edition');
+            $table->string('genre');
             $table->text('discription');
-            $table->date('date_added');
-            $table->integer('amount');
-            $table->integer('amount_loaned');
-            $table->integer('minimum_age');
+            $table->string('language')->default("Nederlands");
+            $table->integer('amount')->default(1);
+            $table->integer('amount_loaned')->default(0);
+            $table->integer('minimum_age')->default(0);
             $table->timestamps();
         });
     }
