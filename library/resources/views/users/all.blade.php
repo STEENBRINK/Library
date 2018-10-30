@@ -4,15 +4,11 @@
         <tr>
             <th class="all">Name</th>
             <th>E-mail</th>
-            <th>Author</th>
-            <th>Amount available</th>
+            <th>E-mail verified</th>
+            <th>Is Admin</th>
         </tr>
-        @foreach($books as $book)
+        @foreach($users as $user)
             <tr class="dohover">
-                <td><a href="/books/{{$book->isbn}}">{{$book->isbn}}</a></td>
-                <td><a href="/books/{{$book->isbn}}">{{$book->title}}</a></td>
-                <td><a href="/books/{{$book->isbn}}">{{$book->author_firstname}} {{$book->author_lastname}}</a></td>
-                <td><a href="/books/{{$book->isbn}}">{{($book->amount-$book->amount_loaned)}}</a></td>
             </tr>
         @endforeach
     </table>
