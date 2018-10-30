@@ -13,6 +13,8 @@
         <button type="submit">Log in</button>
 
     </form>
+    <br>
+    <a href="/register"><button>Create Your Account!</button></a>
 
     @include('sections.errors')
 @endsection

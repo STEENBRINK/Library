@@ -12,7 +12,7 @@ Route::get('/', 'HomeController@index')->name('home');
 
 //user
 Route::get('/register', 'RegistrationsController@create');
-Route::get('/login', 'SessionsController@create');
+Route::get('/login', 'SessionsController@create')->name('login');
 Route::get('/logout', 'SessionsController@destroy')->name('logout');
 
 //admin

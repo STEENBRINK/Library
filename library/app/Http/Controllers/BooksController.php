@@ -7,6 +7,11 @@ use App\Book;
 
 class BooksController extends Controller
 {
+    public function __construct(){
+        $this->middleware('auth');
+        $this->middleware('admin')->except('index', 'show');
+    }
+
     public function index()
     {
         $books = Book::orderBy('author_lastname', 'desc')->get();
@@ -33,7 +38,7 @@ class BooksController extends Controller
             'author_lastname' => ['required', 'string', 'max:255'],
             'release_date' => ['required', 'date'],
             'distributor' => ['required', 'string', 'max:255'],
-            'discription' => ['required', 'text'],
+            'discription' => ['required'],
             'genre' => ['required', 'string'],
             'edition' => ['required', 'integer', 'max:3'],
             'language' => ['string', 'max:255', 'nullable'],
