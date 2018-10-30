@@ -2,6 +2,9 @@
 <head>
     <link rel="stylesheet" href="{{ URL::asset('/css/app.css') }}">
     <title>Library</title>
+
+    <!-- CSRF Token -->
+    <meta name="csrf-token" content="{{ csrf_token() }}">
 </head>
 <body>
     @include('sections.nav')

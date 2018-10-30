@@ -4,28 +4,28 @@
     <form method="post" action="/books">
         {{ csrf_field() }}
         <label for="isbn">ISBN</label>
-        <input type="text" class="form-control" name="isbn" placeholder="Enter ISBN" required>
+        <input type="text" name="isbn" placeholder="Enter ISBN" required autofocus>
 
         <label for="title">Title</label>
-        <input type="text" class="form-control" name="title" placeholder="Title" required>
+        <input type="text" name="title" placeholder="Title" required>
 
         <label for="author_firstname">Author's First Name</label>
-        <input type="text" class="form-control" name="author_firstname" placeholder="Author's First Name" required>
+        <input type="text"  name="author_firstname" placeholder="Author's First Name" required>
 
         <label for="author_lastname">Author's Last Name</label>
-        <input type="text" class="form-control" name="author_lastname" placeholder="Author's Last Name" required>
+        <input type="text"  name="author_lastname" placeholder="Author's Last Name" required>
 
         <label for="release_date">Release Date</label>
-        <input type="date" class="form-control" name="release_date" required>
+        <input type="date"  name="release_date" required>
 
         <label for="distributor">Distributor</label>
-        <input type="text" class="form-control" name="distributor" placeholder="Distributor" required>
+        <input type="text"  name="distributor" placeholder="Distributor" required>
 
         <label for="edition">Edition</label>
-        <input type="number" class="form-control" name="edition" placeholder="Edition" required>
+        <input type="number"  name="edition" placeholder="Edition" required>
 
         <label for="genre">Genre</label>
-        <select class="form-control" name="genre">
+        <select  name="genre">
             <option value="" disabled selected>Choose genre...</option>
             <option value="Biografie & Waargebeurd">Biografie & Waargebeurd</option>
             <option value="Chicklit & Romantiek">Chicklit & Romantiek</option>
@@ -46,16 +46,16 @@
         </select>
 
         <label for="discription">Discription</label>
-        <textarea class="form-control" name="discription" rows="10"></textarea>
+        <textarea  name="discription" rows="10"></textarea>
 
         <label for="language">Language (default: Nederlands)</label>
-        <input type="text" class="form-control" name="language" placeholder="Language">
+        <input type="text"  name="language" placeholder="Language">
 
         <label for="minimum_age">Minimum Age (default: 0)</label>
-        <input type="number" class="form-control" name="minimum_age" placeholder="Minimum Age">
+        <input type="number"  name="minimum_age" placeholder="Minimum Age">
 
         <label for="amount">Amount (default: 1)</label>
-        <input type="number" class="form-control" name="amount" placeholder="Amount">
+        <input type="number"  name="amount" placeholder="Amount">
 
         <button type="submit">Submit</button>
     </form>

@@ -9,7 +9,7 @@ class BooksController extends Controller
 {
     public function index()
     {
-        $books = Book::orderBy('author_firstname', 'desc')->get();
+        $books = Book::orderBy('author_lastname', 'desc')->get();
         return view('books.all', compact('books'));
     }
 
@@ -27,15 +27,19 @@ class BooksController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'isbn' => 'required|max:13',
-            'title' => 'required',
-            'author_firstname' => 'required|max:50',
-            'author_lastname' => 'required|max:50',
-            'release_date' => 'required',
-            'distributor' => 'required|max:50',
-            'discription' => 'required',
-            'genre' => 'required',
-            'edition' => 'required|max:3'
+            'isbn' => ['required', 'string', 'max:13', 'unique:books'],
+            'title' => ['required', 'string', 'max:255'],
+            'author_firstname' => ['required', 'string', 'max:255'],
+            'author_lastname' => ['required', 'string', 'max:255'],
+            'release_date' => ['required', 'date'],
+            'distributor' => ['required', 'string', 'max:255'],
+            'discription' => ['required', 'text'],
+            'genre' => ['required', 'string'],
+            'edition' => ['required', 'integer', 'max:3'],
+            'language' => ['string', 'max:255', 'nullable'],
+            'amount' => ['integer', 'max:5', 'nullable'],
+            'amount_loaned' => ['integer', 'max:5', 'nullable'],
+            'minimum_age' => ['integer', 'max:2', 'nullable']
         ]);
 
         if($request['language'] === null){
