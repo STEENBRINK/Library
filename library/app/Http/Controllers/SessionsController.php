@@ -8,7 +8,7 @@ use App\User;
 class SessionsController extends Controller
 {
     public function __construct(){
-        $this->middleware('guest')->except(['destroy']);
+        $this->middleware('guest')->except(['destroy', 'index']);
     }
     /**
      * Display a listing of the resource.
@@ -17,7 +17,7 @@ class SessionsController extends Controller
      */
     public function index()
     {
-        //
+        return view('sessions.all');
     }
 
     /**

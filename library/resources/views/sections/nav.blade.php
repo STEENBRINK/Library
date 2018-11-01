@@ -9,7 +9,7 @@
         @endif
         <li id="login">
             @if (Auth::check())
-                    <a href="/logout"> {{ Auth::user()->name }} </a>
+                    <a href="/me"> {{ Auth::user()->name }} </a>
             @else
                 <a href="/login">
                     Login

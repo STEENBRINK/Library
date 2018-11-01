@@ -4,9 +4,15 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\User;
+use Illuminate\Support\Facades\Auth;
 
 class RegistrationsController extends Controller
 {
+    public function __construct(){
+        $this->middleware('guest')->only(['create', 'store']);
+        $this->middleware('auth')->except(['create', 'store']);
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -70,9 +76,9 @@ class RegistrationsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit()
     {
-        //
+        return view('registrations.edit');
     }
 
     /**
@@ -82,9 +88,37 @@ class RegistrationsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
-        //
+        /*
+         * @todo
+         * check per field if different
+         * validate request per field
+         * store
+         */
+
+        if($request['id'] == Auth::user()->id){
+
+            //validate
+            $request->validate([
+                'name' => ['required', 'string', 'max:255'],
+                'birth_date' => ['required', 'date'],
+                'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+                'password' => ['required', 'string', 'min:6', 'confirmed']
+            ]);
+
+            $request['password'] = bcrypt($request['password']);
+
+            $user = User::where('id', $id)->update(request(['name', 'birth_date', 'email', 'password']));
+            //sign-in
+            auth()->login($user);
+
+            //redirect
+            return redirect()->home();
+
+        }else{
+            return back()->withErrors(['message' => 'ID incorrect']);
+        }
     }
 
     /**

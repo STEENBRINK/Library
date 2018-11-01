@@ -14,6 +14,8 @@ Route::get('/', 'HomeController@index')->name('home');
 Route::get('/register', 'RegistrationsController@create');
 Route::get('/login', 'SessionsController@create')->name('login');
 Route::get('/logout', 'SessionsController@destroy')->name('logout');
+Route::get('/me', 'SessionsController@index');
+Route::get('/edit', 'RegistrationsController@edit');
 
 //admin
 Route::get('/users', 'UsersController@index');
@@ -28,3 +30,7 @@ Route::post('/books', 'BooksController@store');
 //user
 Route::post('/login', 'SessionsController@store');
 Route::post('/register', 'RegistrationsController@store');
+Route::post('/update', 'RegistrationsController@update');
+
+//search
+Route::post('/search', 'QueryController@search');

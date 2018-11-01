@@ -40,7 +40,7 @@ class BooksController extends Controller
             'distributor' => ['required', 'string', 'max:255'],
             'discription' => ['required'],
             'genre' => ['required', 'string'],
-            'edition' => ['required', 'integer', 'max:3'],
+            'edition' => ['required', 'integer'],
             'language' => ['string', 'max:255', 'nullable'],
             'amount' => ['integer', 'max:5', 'nullable'],
             'amount_loaned' => ['integer', 'max:5', 'nullable'],
