@@ -19,6 +19,7 @@
             <th class="all">ISBN</th>
             <th>Title</th>
             <th>Author</th>
+            <th>Distributor</th>
             <th>Amount available</th>
         </tr>
             @foreach($books as $book)
@@ -26,6 +27,7 @@
                         <td><a href="/books/{{$book->isbn}}">{{$book->isbn}}</a></td>
                         <td><a href="/books/{{$book->isbn}}">{{$book->title}}</a></td>
                         <td><a href="/books/{{$book->isbn}}">{{$book->author_firstname}} {{$book->author_lastname}}</a></td>
+                        <td><a href="/books/{{$book->isbn}}">{{$book->distributor}}</a></td>
                         <td><a href="/books/{{$book->isbn}}">{{($book->amount-$book->amount_loaned)}}</a></td>
                     </tr>
             @endforeach

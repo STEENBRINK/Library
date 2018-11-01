@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\User;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 
 class RegistrationsController extends Controller
 {
@@ -90,35 +91,50 @@ class RegistrationsController extends Controller
      */
     public function update(Request $request)
     {
-        /*
-         * @todo
-         * check per field if different
-         * validate request per field
-         * store
-         */
 
-        if($request['id'] == Auth::user()->id){
+        $user = Auth::user();
 
-            //validate
-            $request->validate([
-                'name' => ['required', 'string', 'max:255'],
-                'birth_date' => ['required', 'date'],
-                'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-                'password' => ['required', 'string', 'min:6', 'confirmed']
-            ]);
+        if($request['id'] == Auth::user()->id) {
+            if (Hash::check($request['old_password'], Auth::user()->password)){
 
-            $request['password'] = bcrypt($request['password']);
+                if(!($request['name'] === null)){
+                    $request->validate([
+                        'name' => ['string', 'max:255']
+                    ]);
+                    $user->name = $request['name'];
+                }
 
-            $user = User::where('id', $id)->update(request(['name', 'birth_date', 'email', 'password']));
-            //sign-in
-            auth()->login($user);
+                if(!($request['email'] === null)){
+                    $request->validate([
+                        'email' => ['string', 'email', 'max:255', 'unique:users']
+                    ]);
+                    $user->email = $request['email'];
+                }
 
-            //redirect
-            return redirect()->home();
+                if(!($request['birth_date'] === null)){
+                    $request->validate([
+                        'birth_date' => ['date']
+                    ]);
+                    $user->birth_date = $request['birth_date'];
+                }
 
+                if(!($request['new_password'] === null)){
+                    $request->validate([
+                        'new_password' => ['string', 'min:6', 'confirmed']
+                    ]);
+                    $user->password = bcrypt($request['new_password']);
+                }
+
+                $user->save();
+
+                return redirect('/me');
+            }else {
+                return back()->withErrors(['message' => 'invalid password']);
+            }
         }else{
             return back()->withErrors(['message' => 'ID incorrect']);
         }
+
     }
 
     /**

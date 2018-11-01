@@ -6,23 +6,25 @@
 
         <input type="hidden" id="id" name="id" value="{{Auth::user()->id}}">
 
-        <label for="name">Name</label>
-        <input type="text" id="name" name="name" value="{{ Auth::user()->name }}" required autofocus>
+        <label>Only fill in the fields you want to change and your password to confirm it's you.</label><br><br>
 
-        <label for="email">Email</label>
-        <input type="email" id="email" name="email" value="{{ Auth::user()->email }}" required>
+        <label for="name">Update name</label>
+        <input type="text" id="name" name="name"autofocus>
 
-        <label for="birth_date">Birth Date</label>
-        <input type="date" id="birth_date" name="birth_date" value="{{ Auth::user()->birth_date }}" required>
+        <label for="email">Update e-mail</label>
+        <input type="email" id="email" name="email">
+
+        <label for="birth_date">Update Birthdate</label>
+        <input type="date" id="birth_date" name="birth_date">
+
+        <label for="new_password">Update Password</label>
+        <input type="password" id="new_password" name="new_password"  value="">
+
+        <label for="new_password_confirmation">Verify updated password</label>
+        <input type="password" id="new_password_confirmation" name="new_password_confirmation"><br><br>
 
         <label for="old_password">Your current password</label>
         <input type="password" id="old_password" name="old_password" required>
-
-        <label for="new_password">Password</label>
-        <input type="password" id="new_password" name="new_password"  value="">
-
-        <label for="new_password_confirmation">Verify Password</label>
-        <input type="password" id="new_password_confirmation" name="new_password_confirmation">
 
         <button type="submit">Register</button>
 

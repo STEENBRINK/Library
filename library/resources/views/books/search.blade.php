@@ -15,16 +15,16 @@
             <th class="all">ISBN</th>
             <th>Title</th>
             <th>Author</th>
-            <th>Amount available</th>
             <th>Distributor</th>
+            <th>Amount available</th>
         </tr>
         @foreach($results as $result)
             <tr class="dohover">
                 <td><a href="/books/{{$result->isbn}}">{{$result->isbn}}</a></td>
                 <td><a href="/books/{{$result->isbn}}">{{$result->title}}</a></td>
                 <td><a href="/books/{{$result->isbn}}">{{$result->author_firstname}} {{$result->author_lastname}}</a></td>
-                <td><a href="/books/{{$result->isbn}}">{{($result->amount-$result->amount_loaned)}}</a></td>
                 <td><a href="/books/{{$result->isbn}}">{{$result->distributor}}</a></td>
+                <td><a href="/books/{{$result->isbn}}">{{($result->amount-$result->amount_loaned)}}</a></td>
             </tr>
         @endforeach
     </table>
