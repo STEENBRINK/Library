@@ -19,7 +19,7 @@
         <label for="password_confirmation">Verify Password</label>
         <input type="password" id="password_confirmation" name="password_confirmation" placeholder="Verify password" required>
 
-        <button type="submit">Register</button>
+        <input type="submit" value="Register" />
 
     </form>
 

@@ -8,7 +8,7 @@ use App\User;
 class SessionsController extends Controller
 {
     public function __construct(){
-        $this->middleware('guest')->except(['destroy', 'index']);
+        $this->middleware('guest')->except(['destroy', 'show']);
     }
     /**
      * Display a listing of the resource.
@@ -17,7 +17,7 @@ class SessionsController extends Controller
      */
     public function index()
     {
-        return view('sessions.all');
+        //
     }
 
     /**
@@ -49,6 +49,8 @@ class SessionsController extends Controller
             return back()->withErrors(['message' => 'Login incorrect']);
         }
 
+        session()->flash('message', 'Welcome back!');
+
         //redirect
         return redirect()->home();
     }
@@ -59,9 +61,9 @@ class SessionsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show()
     {
-        //
+        return view('sessions.show');
     }
 
     /**

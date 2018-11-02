@@ -6,6 +6,7 @@
             <th>E-mail</th>
             <th>E-mail verified at</th>
             <th>Is Admin</th>
+            <th>Edit</th>
         </tr>
         @foreach($users as $user)
             <tr class="dohover">
@@ -25,6 +26,12 @@
                 @else
                     <td> False </td>
                 @endif
+
+                <td>
+                    <form action="/users/edit/{{$user->id}}">
+                        <input type="submit" value="Edit" />
+                    </form>
+                </td>
 
             </tr>
         @endforeach

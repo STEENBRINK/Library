@@ -57,7 +57,7 @@
         <label for="amount">Amount (default: 1)</label>
         <input type="number"  name="amount" placeholder="Amount">
 
-        <button type="submit">Submit</button>
+        <input type="submit" value="Create" />
     </form>
 
     @include('sections.errors')

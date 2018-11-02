@@ -63,7 +63,8 @@ class UsersController extends Controller
      */
     public function edit($id)
     {
-        //
+        $user = User::where('id', '=', $id)->first();
+        return view('users.edit', compact('user'));
     }
 
     /**

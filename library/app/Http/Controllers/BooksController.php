@@ -65,8 +65,10 @@ class BooksController extends Controller
 
         Book::create(request(['isbn', 'title', 'author_firstname', 'author_lastname', 'release_date', 'distributor', 'discription', 'genre', 'edition', 'language', 'minimum_age', 'amount']));
 
-        //redirect
+        //flash message
+        session()->flash('message', 'Book added!');
 
+        //redirect
         return redirect('/books');
     }
 }

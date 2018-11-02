@@ -14,11 +14,12 @@ Route::get('/', 'HomeController@index')->name('home');
 Route::get('/register', 'RegistrationsController@create');
 Route::get('/login', 'SessionsController@create')->name('login');
 Route::get('/logout', 'SessionsController@destroy')->name('logout');
-Route::get('/me', 'SessionsController@index');
+Route::get('/me', 'SessionsController@show');
 Route::get('/edit', 'RegistrationsController@edit');
 
 //admin
 Route::get('/users', 'UsersController@index');
+Route::get('/users/edit/{id}', 'UsersController@edit');
 
 /*
  * POST METHODS

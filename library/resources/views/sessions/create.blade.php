@@ -10,11 +10,13 @@
         <label for="password">Password</label>
         <input type="password" id="password" name="password" placeholder="Password" required>
 
-        <button type="submit">Log in</button>
+        <input type="submit" value="Log in" />
 
     </form>
     <br>
-    <a href="/register"><button>Create Your Account!</button></a>
+    <form action="/register">
+        <input type="submit" value="Create a new account" />
+    </form>
 
     @include('sections.errors')
 @endsection

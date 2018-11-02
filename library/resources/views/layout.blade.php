@@ -8,6 +8,11 @@
 </head>
 <body>
     @include('sections.nav')
+    @if($flash = session('message'))
+        <div class="alert" role="alert">
+            {{$flash}}
+        </div>
+    @endif
 
     <div class="default">
         <section class="content">

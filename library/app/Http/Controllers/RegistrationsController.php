@@ -3,9 +3,11 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
+use App\User;
+use App\Mail\Welcome;
 
 class RegistrationsController extends Controller
 {
@@ -55,6 +57,12 @@ class RegistrationsController extends Controller
         $user = User::create(request(['name', 'birth_date', 'email', 'password']));
         //sign-in
         auth()->login($user);
+
+        //e-mail user
+        Mail::to($user)->send(new Welcome($user));
+
+        //welcome user
+        session()->flash('message', 'Thanks for signing up!');
 
         //redirect
         return redirect()->home();
@@ -126,6 +134,8 @@ class RegistrationsController extends Controller
                 }
 
                 $user->save();
+
+                session()->flash('message', 'Data updated!');
 
                 return redirect('/me');
             }else {

@@ -4,7 +4,7 @@
     <form method="POST" action="/search">
         {{ csrf_field() }}
         <input placeholder="Search..." name="search" type="text" required><br>
-        <button type="submit">Search</button>
+        <input type="submit" value="Search" />
     </form>
 
     <h1>Results:</h1>
