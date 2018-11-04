@@ -18,3 +18,13 @@
         <input type="password" id="old_password" name="old_password" required>
 
 @endsection
+
+@section('extra_content')
+        <form method="post" action="/delete">
+
+                {{ csrf_field() }}
+                <input type="hidden" name="id" value="{{Auth::user()->id}}">
+                <input class="delete" type="submit" value="DELETE ACCOUNT" />
+
+        </form>
+@endsection

@@ -32,9 +32,11 @@ Route::post('/books', 'BooksController@store');
 Route::post('/login', 'SessionsController@store');
 Route::post('/register', 'RegistrationsController@store');
 Route::post('/update', 'RegistrationsController@update');
+Route::post('/delete', 'RegistrationsController@destroy');
 
 //admins
 Route::post('/users', 'QueryController@admin');
+Route::post('/admin', 'UsersController@admin');
 
 //queries
 Route::post('/search', 'QueryController@search');

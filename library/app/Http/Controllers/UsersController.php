@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\User;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 
 class UsersController extends Controller
 {
@@ -86,8 +87,22 @@ class UsersController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function admin(Request $request)
     {
-        //
+        if($request['admin_id'] == Auth::user()->id)
+        {
+            $user = User::where('id', '=', $request['id'])->first();
+            $user->isadmin = !$user->isadmin;
+            $user->save();
+
+        }else {
+            return back()->withErrors(['message' => 'Amdin error']);
+        }
+
+        Log::info($user->name . ' their admin status was reversed!');
+
+        session()->flash('message', 'Data updated!');
+
+        return redirect('/users');
     }
 }

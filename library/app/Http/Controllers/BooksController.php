@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Book;
+use Illuminate\Support\Facades\Log;
 
 class BooksController extends Controller
 {
@@ -69,6 +70,8 @@ class BooksController extends Controller
 
         //flash message
         session()->flash('message', 'Book added!');
+
+        Log::info('A book was created!');
 
         //redirect
         return redirect('/books');

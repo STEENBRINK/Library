@@ -24,4 +24,5 @@
     @include('sections.errors')
     <br>
     @yield('extra_content')
+
 @endsection

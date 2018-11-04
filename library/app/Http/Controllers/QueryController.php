@@ -20,39 +20,28 @@ class QueryController extends Controller
         $books = null;
         if($request['search']) {
 
+            $standard_query =
+                Book::where(function ($query) {
+                    $query->where('isbn', 'LIKE', '%' . $this->request['search'] . '%')
+                        ->orWhere('title', 'LIKE', '%' . $this->request['search'] . '%')
+                        ->orWhereRaw("CONCAT(`author_firstname`, ' ', `author_lastname`) LIKE ?", '%' . $this->request['search'] . '%')
+                        ->orWhere('distributor', 'LIKE', '%' . $this->request['search'] . '%'); });
+
             if($request['filter'] == 'All') {
 
-                $books =
-                    Book::where('isbn', 'LIKE', '%' . $request['search'] . '%')
-                        ->orWhere('title', 'LIKE', '%' . $request['search'] . '%')
-                        ->orWhereRaw("CONCAT(`author_firstname`, ' ', `author_lastname`) LIKE ?", '%' . $request['search'] . '%')
-                        ->orWhere('distributor', 'LIKE', '%' . $request['search'] . '%')
+                $books = $standard_query
                         ->orderBy('author_lastname', 'desc')->get();
 
             }elseif($request['filter'] == 'Available') {
 
-                $books =
-                    Book::where(function ($query) {
-
-                        $query->where('isbn', 'LIKE', '%' . $this->request['search'] . '%')
-                            ->orWhere('title', 'LIKE', '%' . $this->request['search'] . '%')
-                            ->orWhereRaw("CONCAT(`author_firstname`, ' ', `author_lastname`) LIKE ?", '%' . $this->request['search'] . '%')
-                            ->orWhere('distributor', 'LIKE', '%' . $this->request['search'] . '%');
-
-                    })->where('amount', '>', 'amount_loaned')
+                $books = $standard_query
+                        ->where('amount', '>', 'amount_loaned')
                         ->orderBy('author_lastname', 'desc')->get();
 
             }elseif($request['filter'] == 'Unavailable') {
 
-                $books =
-                    Book::where(function ($query) {
-
-                        $query->where('isbn', 'LIKE', '%' . $this->request['search'] . '%')
-                            ->orWhere('title', 'LIKE', '%' . $this->request['search'] . '%')
-                            ->orWhereRaw("CONCAT(`author_firstname`, ' ', `author_lastname`) LIKE ?", '%' . $this->request['search'] . '%')
-                            ->orWhere('distributor', 'LIKE', '%' . $this->request['search'] . '%');
-
-                    })->where('amount', '=', 'amount_loaned')
+                $books = $standard_query
+                        ->where('amount', '=', 'amount_loaned')
                         ->orderBy('author_lastname', 'desc')->get();
             }
 

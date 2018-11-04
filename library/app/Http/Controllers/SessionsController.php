@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\User;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 
 class SessionsController extends Controller
 {
@@ -49,6 +51,8 @@ class SessionsController extends Controller
             return back()->withErrors(['message' => 'Login incorrect']);
         }
 
+        Log::info(Auth::user()->name . ' logged in!');
+
         session()->flash('message', 'Welcome back!');
 
         //redirect
@@ -84,7 +88,7 @@ class SessionsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
         //
     }
@@ -98,6 +102,7 @@ class SessionsController extends Controller
 
     public function destroy(Request $request)
    {
+       Log::info(Auth::user()->name . ' logged out!');
        auth()->logout();
        return redirect()->home();
    }

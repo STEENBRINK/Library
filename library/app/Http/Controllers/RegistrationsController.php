@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 use App\User;
 use App\Mail\Welcome;
@@ -63,6 +64,8 @@ class RegistrationsController extends Controller
 
         //welcome user
         session()->flash('message', 'Thanks for signing up!');
+
+        Log::info($request['name'] . ' was registered!');
 
         //redirect
         return redirect()->home();
@@ -137,6 +140,8 @@ class RegistrationsController extends Controller
 
                 session()->flash('message', 'Data updated!');
 
+                Log::info($request['name'] . ' was updated!');
+
                 return redirect('/me');
             }else {
                 return back()->withErrors(['message' => 'invalid password']);
@@ -153,8 +158,14 @@ class RegistrationsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request)
     {
-        //
+        User::where('id', '=', $request['id'])->delete();
+
+        session()->flash('message', 'Account deleted!');
+
+        Log::info($request['id'] . ' was deleted!');
+
+        return redirect('/me');
     }
 }
