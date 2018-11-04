@@ -2,24 +2,99 @@
 
 namespace App\Http\Controllers;
 
+use App\User;
 use Illuminate\Http\Request;
 use App\Book;
 
 class QueryController extends Controller
 {
+
+    public function __construct(){
+        $this->middleware('admin')->only('admin');
+    }
+
+    private $request;
     public function search(Request $request)
     {
-        // Gets the query string from our form submission
-        //$query = $request['search'];
-        // Returns an array of articles that have the query string located somewhere within
-        // our articles titles. Paginates them so we can break up lots of search results.
-        $results =
-            Book::where('isbn', 'LIKE', '%' . $request['search'] . '%')
-                ->orWhere('title', 'LIKE', '%' . $request['search'] . '%')
-                ->orWhereRaw("CONCAT(`author_firstname`, ' ', `author_lastname`) LIKE ?", '%' . $request['search'] . '%')
-                ->orWhere('distributor', 'LIKE', '%' . $request['search'] . '%')->get();
-        //dd($results);
-        // returns a view and passes the view the list of articles and the original query.
-        return view('books.search', compact('results'));
+        $this->request = $request;
+        $books = null;
+        if($request['search']) {
+
+            if($request['filter'] == 'All') {
+
+                $books =
+                    Book::where('isbn', 'LIKE', '%' . $request['search'] . '%')
+                        ->orWhere('title', 'LIKE', '%' . $request['search'] . '%')
+                        ->orWhereRaw("CONCAT(`author_firstname`, ' ', `author_lastname`) LIKE ?", '%' . $request['search'] . '%')
+                        ->orWhere('distributor', 'LIKE', '%' . $request['search'] . '%')
+                        ->orderBy('author_lastname', 'desc')->get();
+
+            }elseif($request['filter'] == 'Available') {
+
+                $books =
+                    Book::where(function ($query) {
+
+                        $query->where('isbn', 'LIKE', '%' . $this->request['search'] . '%')
+                            ->orWhere('title', 'LIKE', '%' . $this->request['search'] . '%')
+                            ->orWhereRaw("CONCAT(`author_firstname`, ' ', `author_lastname`) LIKE ?", '%' . $this->request['search'] . '%')
+                            ->orWhere('distributor', 'LIKE', '%' . $this->request['search'] . '%');
+
+                    })->where('amount', '>', 'amount_loaned')
+                        ->orderBy('author_lastname', 'desc')->get();
+
+            }elseif($request['filter'] == 'Unavailable') {
+
+                $books =
+                    Book::where(function ($query) {
+
+                        $query->where('isbn', 'LIKE', '%' . $this->request['search'] . '%')
+                            ->orWhere('title', 'LIKE', '%' . $this->request['search'] . '%')
+                            ->orWhereRaw("CONCAT(`author_firstname`, ' ', `author_lastname`) LIKE ?", '%' . $this->request['search'] . '%')
+                            ->orWhere('distributor', 'LIKE', '%' . $this->request['search'] . '%');
+
+                    })->where('amount', '=', 'amount_loaned')
+                        ->orderBy('author_lastname', 'desc')->get();
+            }
+
+            $term = $request['search'];
+
+        }else{
+
+            if($request['filter'] == 'All') {
+
+                $books =
+                    Book::orderBy('author_lastname', 'desc')->get();
+
+            }elseif($request['filter'] == 'Available') {
+                $books =
+                    Book::where('amount', '>', 'amount_loaned')
+                        ->orderBy('author_lastname', 'desc')->get();
+            }elseif($request['filter'] == 'Unavailable') {
+
+                $books =
+                    Book::where('amount', '=', 'amount_loaned')
+                        ->orderBy('author_lastname', 'desc')->get();
+
+            }
+
+            $term = null;
+
+        }
+
+        $filter = $request['filter'];
+
+        return view('books.all', compact('books', 'term', 'filter'));
+    }
+
+    public function admin(Request $request) {
+        if($request['isadmin'] == 'on'){
+            $users = User::where('isadmin', '=', 1)->orderBy('name', 'desc')->get();
+            $checked = true;
+        }else{
+            $users = User::orderBy('name', 'desc')->get();
+            $checked = false;
+        }
+
+        return view('users.all', compact('users', 'checked'));
     }
 }

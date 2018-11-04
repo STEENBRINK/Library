@@ -1,5 +1,19 @@
 @extends('layout')
 @section('content')
+    <!-- Rounded switch -->
+    <form action="/users" method="POST">
+        {{ csrf_field() }}
+        <label>Admins Only:</label><br>
+        <label class="switch">
+            @if($checked)
+                <input name="isadmin" type="checkbox" onchange="this.form.submit()" checked>
+            @else
+                <input name="isadmin" type="checkbox" onchange="this.form.submit()">
+            @endif
+            <span class="slider round"></span>
+        </label>
+    </form><br>
+
     <table>
         <tr>
             <th class="all">Name</th>

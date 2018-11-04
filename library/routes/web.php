@@ -33,5 +33,8 @@ Route::post('/login', 'SessionsController@store');
 Route::post('/register', 'RegistrationsController@store');
 Route::post('/update', 'RegistrationsController@update');
 
-//search
+//admins
+Route::post('/users', 'QueryController@admin');
+
+//queries
 Route::post('/search', 'QueryController@search');

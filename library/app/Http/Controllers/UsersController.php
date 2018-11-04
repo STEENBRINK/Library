@@ -20,7 +20,8 @@ class UsersController extends Controller
     public function index()
     {
         $users = User::orderBy('name', 'desc')->get();
-        return view('users.all', compact('users'));
+        $checked = false;
+        return view('users.all', compact('users', 'checked'));
     }
 
     /**

@@ -15,7 +15,9 @@ class BooksController extends Controller
     public function index()
     {
         $books = Book::orderBy('author_lastname', 'desc')->get();
-        return view('books.all', compact('books'));
+        $term = null;
+        $filter = 'All';
+        return view('books.all', compact('books', 'term', 'filter'));
     }
 
     public function show($isbn)
